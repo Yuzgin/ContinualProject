@@ -1,0 +1,23 @@
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# dataset (downloaded by torchvision)
+data/
+
+# old kaggle dataset
+cifar-10/
+*.7z
+
+# training outputs
+outputs/
+*.pt
+*.pth
+
+# os / editor
+.DS_Store
+.idea/
+.vscode/
