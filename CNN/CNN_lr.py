@@ -50,14 +50,19 @@ class CifarDataset(Dataset):
         self.data = pd.read_csv(csv_file)
         self.targets = list(self.data["label"])
 
+        self.images = []
+        for i in range(len(self.data)):
+            row = self.data.iloc[i]
+            img_path = os.path.join(images_folder, row["image"])
+            image = Image.open(img_path).convert('RGB')
+            self.images.append(image)
+
     def __len__(self):
         return len(self.data)
 
     def __getitem__(self, idx):
-        row = self.data.iloc[idx]
-        img_path = os.path.join(self.images_folder, row["image"])
-        image = Image.open(img_path).convert('RGB')
-        label = int(row["label"])
+        image = self.images[idx]
+        label = self.targets[idx]
 
         if self.transform:
             image = self.transform(image)
@@ -121,7 +126,7 @@ def main():
                 if train_dataset.targets[i] in classes:
                     indices.append(i)
 
-            train_loader = DataLoader(Subset(train_dataset, indices), batch_size=batch_size, shuffle=True, num_workers=4)
+            train_loader = DataLoader(Subset(train_dataset, indices), batch_size=batch_size, shuffle=True, num_workers=16)
 
             optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=wd)
             scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs)
@@ -186,7 +191,7 @@ def main():
                     if test_dataset.targets[i] in eval_classes:
                         eval_indices.append(i)
 
-                test_loader = DataLoader(Subset(test_dataset, eval_indices), batch_size=batch_size, shuffle=False, num_workers=4)
+                test_loader = DataLoader(Subset(test_dataset, eval_indices), batch_size=batch_size, shuffle=False, num_workers=16)
 
                 correct = 0
                 total = 0
