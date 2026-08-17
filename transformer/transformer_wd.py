@@ -82,7 +82,7 @@ def main():
         model = VisionTransformer(
             image_size=32,
             patch_size=4,
-            num_layers=12,
+            num_layers=24,
             num_heads=3,
             hidden_dim=192,
             mlp_dim=768,

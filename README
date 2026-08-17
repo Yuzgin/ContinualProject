@@ -1,0 +1,7 @@
+#Project code notes
+
+### Model rough Parameter counts:
+
+- CNN, Resnet18: roughy 11.2M
+- Transformer, ViT (tinyx2): 10.7M
+- Hybrid, both: 21.9M
