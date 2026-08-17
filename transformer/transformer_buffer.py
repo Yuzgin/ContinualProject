@@ -69,7 +69,7 @@ def main():
         print("CIFAR-10 not found. Run: python ../downloadData/download_C10.py")
         return
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda:" + str(device_ids[0]) if torch.cuda.is_available() else "cpu")
 
     train_csv = os.path.join(dataset_path, "train_labels.csv")
     test_csv = os.path.join(dataset_path, "test_labels.csv")
