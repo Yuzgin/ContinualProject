@@ -18,22 +18,22 @@ wd = 0.005
 selection = "random"
 data_folder = "../data"
 
-dataset_path = "../data/cifar10"
-buffer_size = 500
+# dataset_path = "../data/cifar10"
+# buffer_size = 2500
 
-# Two Classes per task
-tasks = [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
-norm = transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
+# # Two Classes per task
+# tasks = [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
+# norm = transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
 
-# buffer_size = 2000
-# dataset_path = "../data/cifar100"
+dataset_path = "../data/cifar100"
+buffer_size = 10000
 
-# # Ten classes per task
-# tasks = []
-# for i in range(0, 100, 10):
-#     task = list(range(i, i + 10))
-#     tasks.append(task)
-# norm = transforms.Normalize((0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761))
+# Ten classes per task
+tasks = []
+for i in range(0, 100, 10):
+    task = list(range(i, i + 10))
+    tasks.append(task)
+norm = transforms.Normalize((0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761))
 
 # GPU selection for parralelisation]
 device_ids = [0, 1, 2, 3]   
@@ -71,7 +71,7 @@ class CifarDataset(Dataset):
 
 def main():
     if not os.path.exists(dataset_path):
-        print("CIFAR-10 not found. Run: python ../downloadData/download_C10.py")
+        print("CIFAR-10 not found")
         return
 
     device = torch.device("cuda:" + str(device_ids[0]) if torch.cuda.is_available() else "cpu")
@@ -97,8 +97,8 @@ def main():
         model.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False)
         model.maxpool = nn.Identity()
 
-        model.fc = nn.Linear(model.fc.in_features, 10)
-        # model.fc = nn.Linear(model.fc.in_features, 100)
+        # model.fc = nn.Linear(model.fc.in_features, 10)
+        model.fc = nn.Linear(model.fc.in_features, 100)
         
         model = nn.DataParallel(model, device_ids=device_ids)
         print("Using GPUs " + str(device_ids))
