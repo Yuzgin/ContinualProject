@@ -14,20 +14,29 @@ from torchvision import models
 lrs = [0.001, 0.01, 0.1]
 batch_size = 128
 epochs = 20
-buffer_size = 500
 wd = 0.005
 selection = "random"
 data_folder = "../data"
+
 dataset_path = "../data/cifar10"
+buffer_size = 500
+
+# Two Classes per task
+tasks = [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
+norm = transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
+
+# buffer_size = 2000
+# dataset_path = "../data/cifar100"
+
+# # Ten classes per task
+# tasks = []
+# for i in range(0, 100, 10):
+#     task = list(range(i, i + 10))
+#     tasks.append(task)
+# norm = transforms.Normalize((0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761))
 
 # GPU selection for parralelisation]
-device_ids = [0, 1, 2, 3]
-
-# Two classes per task
-tasks = [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
-
-
-norm = transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
+device_ids = [4, 5, 6, 7]
 train_transform = transforms.Compose([transforms.RandomCrop(32, padding=4),
     transforms.RandomHorizontalFlip(), transforms.ToTensor(), norm,
 ])
@@ -82,7 +91,10 @@ def main():
         model = models.resnet18(weights=None)
         model.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False)
         model.maxpool = nn.Identity()
+
         model.fc = nn.Linear(model.fc.in_features, 10)
+        # model.fc = nn.Linear(model.fc.in_features, 100)
+        
         model = nn.DataParallel(model, device_ids=device_ids)
         print("Using GPUs " + str(device_ids))
         model = model.to(device)
