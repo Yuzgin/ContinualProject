@@ -66,7 +66,7 @@ class CifarDataset(Dataset):
 
 def main():
     if not os.path.exists(dataset_path):
-        print("CIFAR-10 not found. Run: python ../downloadData/download_C10.py")
+        print("CIFAR-10 not found")
         return
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
