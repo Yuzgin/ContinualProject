@@ -28,11 +28,24 @@ data_folder = "../data"
 buffer_sizes = [0, 2500, 10000, 25000]
 dataset_path = "../data/cifar100"
 
+# Five classes per task
+# tasks = []
+# for i in range(0, 100, 5):
+#     task = list(range(i, i + 5))
+#     tasks.append(task)
+
 # Ten classes per task
+# tasks = []
+# for i in range(0, 100, 10):
+#     task = list(range(i, i + 10))
+#     tasks.append(task)
+
+# Twenty classes per task
 tasks = []
-for i in range(0, 100, 10):
-    task = list(range(i, i + 10))
+for i in range(0, 100, 20):
+    task = list(range(i, i + 20))
     tasks.append(task)
+
 norm = transforms.Normalize((0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761))
 
 # GPU selection for parralelisation]
