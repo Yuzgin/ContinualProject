@@ -22,7 +22,10 @@ dataset_path = "../data/cifar10"
 buffer_size = 2500
 
 # Two Classes per task
-tasks = [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
+# tasks = [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
+
+# One class per task
+tasks = [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]
 norm = transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
 
 # dataset_path = "../data/cifar100"
