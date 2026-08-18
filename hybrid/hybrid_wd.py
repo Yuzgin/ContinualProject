@@ -13,7 +13,7 @@ from torchvision import models
 from torchvision.models.vision_transformer import VisionTransformer
 
 wds = [0.0005, 0.005, 0.05]
-batch_size = 64
+batch_size = 128
 epochs = 20
 lr = 0.01
 selection = "random"

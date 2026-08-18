@@ -13,7 +13,7 @@ from torchvision import models
 from torchvision.models.vision_transformer import VisionTransformer
 
 # buffer_sizes = [0, 1000, 2500, 5000]
-batch_size = 64
+batch_size = 128
 epochs = 20
 lr = 0.01
 wd = 0.005
