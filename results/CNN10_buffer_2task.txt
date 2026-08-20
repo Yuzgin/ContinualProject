@@ -1,0 +1,64 @@
+============================================================
+buffer = 0
+selection = random
+lr = 0.01
+wd = 0.005
+seed = 23
+parameters = 11173962
+num_tasks = 2
+accuracy matrix:
+after task 1 : [94.02]
+after task 2 : [0.0, 97.78]
+forgetting:
+task 1 = 94.02
+average accuracy = 48.89
+average forgetting = 94.02
+
+============================================================
+buffer = 1000
+selection = random
+lr = 0.01
+wd = 0.005
+seed = 23
+parameters = 11173962
+num_tasks = 2
+accuracy matrix:
+after task 1 : [94.1]
+after task 2 : [30.9, 97.48]
+forgetting:
+task 1 = 63.199999999999996
+average accuracy = 64.19
+average forgetting = 63.199999999999996
+
+============================================================
+buffer = 2500
+selection = random
+lr = 0.01
+wd = 0.005
+seed = 23
+parameters = 11173962
+num_tasks = 2
+accuracy matrix:
+after task 1 : [94.1]
+after task 2 : [55.42, 96.84]
+forgetting:
+task 1 = 38.67999999999999
+average accuracy = 76.13
+average forgetting = 38.67999999999999
+
+============================================================
+buffer = 5000
+selection = random
+lr = 0.01
+wd = 0.005
+seed = 23
+parameters = 11173962
+num_tasks = 2
+accuracy matrix:
+after task 1 : [94.22]
+after task 2 : [70.44, 95.5]
+forgetting:
+task 1 = 23.78
+average accuracy = 82.97
+average forgetting = 23.78
+
