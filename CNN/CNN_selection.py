@@ -15,7 +15,7 @@ selections = ["random", "best", "worst"]
 batch_size = 128
 epochs = 30
 seed = 23
-lr = 0.001
+lr = 0.01
 wd = 0.005
 data_folder = "../data"
 

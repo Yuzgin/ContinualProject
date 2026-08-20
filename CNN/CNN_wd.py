@@ -15,7 +15,7 @@ wds = [0.0005, 0.005, 0.05]
 batch_size = 128
 epochs = 30
 seed = 23
-lr = 0.001
+lr = 0.01
 selection = "random"
 data_folder = "../data"
 
