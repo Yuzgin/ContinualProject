@@ -19,6 +19,10 @@ lr = 0.001
 selection = "random"
 data_folder = "../data"
 
+dataset_path = "../data/cifar100"
+buffer_size = 10000
+
+
 # dataset_path = "../data/cifar10"
 # buffer_size = 2500
 
@@ -273,8 +277,6 @@ def main():
             f.write("\n")
         print("saved results to", results_path)
         print()
-
-
 
 
 if __name__ == "__main__":
