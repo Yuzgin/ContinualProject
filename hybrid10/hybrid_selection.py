@@ -1,4 +1,4 @@
-# Transformer - Different buffer selection methods.
+# Hybrid - Different buffer selection methods.
 
 import os
 import random
@@ -9,6 +9,7 @@ from torchvision import transforms
 import pandas as pd
 from PIL import Image
 from tqdm import tqdm
+from torchvision import models
 from torchvision.models.vision_transformer import VisionTransformer
 
 selections = ["random", "best", "worst"]
@@ -68,6 +69,21 @@ class CifarDataset(Dataset):
 
         return image, label
 
+
+class HybridModel(nn.Module):
+    def __init__(self, vit, cnn, num_classes):
+        super(HybridModel, self).__init__()
+        self.vit = vit
+        self.cnn = cnn
+        self.fc = nn.Linear(num_classes * 2, num_classes)
+
+    def forward(self, x):
+        vit_out = self.vit(x)
+        cnn_out = self.cnn(x)
+        combined = torch.cat((vit_out, cnn_out), dim=1)
+        return self.fc(combined)
+
+
 def main():
     if not os.path.exists(dataset_path):
         print("CIFAR-10 not found")
@@ -95,18 +111,24 @@ def main():
         random.seed(seed)
         torch.manual_seed(seed)
         torch.cuda.manual_seed_all(seed)
-        # Transformer model
-        model = VisionTransformer(
+        # Hybrid model
+        vit_model = VisionTransformer(
             image_size=32,
             patch_size=4,
             num_layers=12,
             num_heads=3,
             hidden_dim=192,
             mlp_dim=768,
-
             num_classes=10,
             # num_classes=100,
         )
+        cnn_model = models.resnet18(weights=None)
+        cnn_model.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False)
+        cnn_model.maxpool = nn.Identity()
+        cnn_model.fc = nn.Linear(cnn_model.fc.in_features, 10)
+        # cnn_model.fc = nn.Linear(cnn_model.fc.in_features, 100)
+        model = HybridModel(vit_model, cnn_model, 10)
+        # model = HybridModel(vit_model, cnn_model, 100)
         model = nn.DataParallel(model, device_ids=device_ids)
         print("Using GPUs " + str(device_ids))
         model = model.to(device)

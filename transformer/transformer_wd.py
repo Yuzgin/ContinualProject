@@ -13,27 +13,35 @@ from torchvision.models.vision_transformer import VisionTransformer
 
 wds = [0.0005, 0.005, 0.05]
 batch_size = 128
-epochs = 20
-lr = 0.01
+epochs = 30
+seed = 23
+lr = 0.001
 selection = "random"
 data_folder = "../data"
 
 # dataset_path = "../data/cifar10"
 # buffer_size = 2500
 
-# # Two Classes per task
-# tasks = [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
-# norm = transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
+# 20 tasks (5 classes per task)
+# tasks = []
+# for i in range(0, 100, 5):
+#     task = list(range(i, i + 5))
+#     tasks.append(task)
 
-dataset_path = "../data/cifar100"
-buffer_size = 10000
+# 10 tasks (10 classes per task)
+# tasks = []
+# for i in range(0, 100, 10):
+#     task = list(range(i, i + 10))
+#     tasks.append(task)
 
-# Ten classes per task
+# 5 tasks (20 classes per task)
 tasks = []
-for i in range(0, 100, 10):
-    task = list(range(i, i + 10))
+for i in range(0, 100, 20):
+    task = list(range(i, i + 20))
     tasks.append(task)
+
 norm = transforms.Normalize((0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761))
+
 
 # GPU selection for parralelisation]
 device_ids = [4, 5, 6, 7]
@@ -92,11 +100,15 @@ def main():
     for wd in wds:
         print(f"Running weight decay {wd}")
 
+
+        random.seed(seed)
+        torch.manual_seed(seed)
+        torch.cuda.manual_seed_all(seed)
         # Transformer model
         model = VisionTransformer(
             image_size=32,
             patch_size=4,
-            num_layers=24,
+            num_layers=12,
             num_heads=3,
             hidden_dim=192,
             mlp_dim=768,
@@ -143,12 +155,12 @@ def main():
                 replay_x = None
                 replay_y = None
 
+            epoch_bar = tqdm(total=epochs, desc=f"Task {task_id + 1}")
             for epoch in range(epochs):
                 model.train()
                 running_loss = 0.0
-                progress_bar = tqdm(train_loader, desc=f"Task {task_id+1} Epoch {epoch+1}/{epochs}", leave=True)
 
-                for images, labels in progress_bar:
+                for images, labels in train_loader:
                     images = images.to(device)
                     labels = labels.to(device)
 
@@ -166,10 +178,11 @@ def main():
                     optimizer.step()
 
                     running_loss += loss.item()
-                    progress_bar.set_postfix(loss=loss.item())
 
                 scheduler.step()
-                print(f'Epoch [{epoch+1}/{epochs}], Loss: {running_loss / len(train_loader):.4f}')
+                epoch_bar.set_postfix(epoch=epoch + 1, loss=round(running_loss / len(train_loader), 4))
+                epoch_bar.update(1)
+            epoch_bar.close()
 
             # Add prev task examples to buffer
             if samples_per_task > 0:
@@ -213,18 +226,54 @@ def main():
 
 
         # Print results
-        print("buffer =", buffer_size, "selection =", selection, "lr =", lr, "wd =", wd)
+        print("buffer =", buffer_size, "selection =", selection, "lr =", lr, "wd =", wd, "seed =", seed)
         print("parameters =", n_params)
         print("accuracy matrix:")
         for i in range(len(tasks)):
             print("after task", i + 1, ":", accuracy_matrix[i][:i + 1])
 
+        forget_vals = []
         print("forgetting:")
         for task_id in range(len(tasks) - 1):
             peak = accuracy_matrix[task_id][task_id]
             final = accuracy_matrix[len(tasks) - 1][task_id]
-            print("task", task_id + 1, "=", peak - final)
+            forget = peak - final
+            forget_vals.append(forget)
+            print("task", task_id + 1, "=", forget)
+
+        final_row = accuracy_matrix[len(tasks) - 1]
+        avg_acc = sum(final_row) / len(tasks)
+        avg_forget = sum(forget_vals) / len(forget_vals) if forget_vals else 0.0
+        print("average accuracy =", avg_acc)
+        print("average forgetting =", avg_forget)
+
+        family = os.path.basename(os.path.dirname(os.path.abspath(__file__)))
+        kind = os.path.splitext(os.path.basename(__file__))[0].split("_")[-1]
+        results_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "results")
+        os.makedirs(results_dir, exist_ok=True)
+        results_path = os.path.join(results_dir, f"{family}_{kind}_{len(tasks)}task.txt")
+
+        with open(results_path, "a") as f:
+            f.write("=" * 60 + "\n")
+            f.write(f"buffer = {buffer_size}\n")
+            f.write(f"selection = {selection}\n")
+            f.write(f"lr = {lr}\n")
+            f.write(f"wd = {wd}\n")
+            f.write(f"seed = {seed}\n")
+            f.write(f"parameters = {n_params}\n")
+            f.write(f"num_tasks = {len(tasks)}\n")
+            f.write("accuracy matrix:\n")
+            for i in range(len(tasks)):
+                f.write(f"after task {i + 1} : {accuracy_matrix[i][:i + 1]}\n")
+            f.write("forgetting:\n")
+            for task_id, forget in enumerate(forget_vals):
+                f.write(f"task {task_id + 1} = {forget}\n")
+            f.write(f"average accuracy = {avg_acc}\n")
+            f.write(f"average forgetting = {avg_forget}\n")
+            f.write("\n")
+        print("saved results to", results_path)
         print()
+
 
 
 

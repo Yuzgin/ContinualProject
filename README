@@ -2,6 +2,7 @@
 
 ### Model rough Parameter counts:
 
-- CNN, Resnet18: roughy 11.2M
-- Transformer, ViT (tinyx2): 10.7M
-- Hybrid, both: 21.9M
+- CNN, Resnet18: roughly 11.2M
+- Transformer, ViT (tiny, 12 layers): ~5–6M (was tiny×2 / 24 layers ≈ 10.7M)
+- Hybrid, both: CNN + ViT above (exact count printed at run time)
+- `hybrid10/`: same hybrid model on CIFAR-10 (mirrors CNN10 / transformer10)

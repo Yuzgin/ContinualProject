@@ -1,4 +1,4 @@
-# Transformer - Different buffer selection methods.
+# Hybrid - Different learning rates.
 
 import os
 import random
@@ -9,14 +9,15 @@ from torchvision import transforms
 import pandas as pd
 from PIL import Image
 from tqdm import tqdm
+from torchvision import models
 from torchvision.models.vision_transformer import VisionTransformer
 
-selections = ["random", "best", "worst"]
+lrs = [0.001, 0.01, 0.1]
 batch_size = 128
 epochs = 30
 seed = 23
-lr = 0.001
 wd = 0.005
+selection = "random"
 data_folder = "../data"
 
 dataset_path = "../data/cifar10"
@@ -68,6 +69,21 @@ class CifarDataset(Dataset):
 
         return image, label
 
+
+class HybridModel(nn.Module):
+    def __init__(self, vit, cnn, num_classes):
+        super(HybridModel, self).__init__()
+        self.vit = vit
+        self.cnn = cnn
+        self.fc = nn.Linear(num_classes * 2, num_classes)
+
+    def forward(self, x):
+        vit_out = self.vit(x)
+        cnn_out = self.cnn(x)
+        combined = torch.cat((vit_out, cnn_out), dim=1)
+        return self.fc(combined)
+
+
 def main():
     if not os.path.exists(dataset_path):
         print("CIFAR-10 not found")
@@ -88,25 +104,31 @@ def main():
     print(f"Length of test dataset: {len(test_dataset)}")
 
 
-    for selection in selections:
-        print(f"Running selection {selection}")
+    for lr in lrs:
+        print(f"Running learning rate {lr}")
 
 
         random.seed(seed)
         torch.manual_seed(seed)
         torch.cuda.manual_seed_all(seed)
-        # Transformer model
-        model = VisionTransformer(
+        # Hybrid model
+        vit_model = VisionTransformer(
             image_size=32,
             patch_size=4,
             num_layers=12,
             num_heads=3,
             hidden_dim=192,
             mlp_dim=768,
-
             num_classes=10,
             # num_classes=100,
         )
+        cnn_model = models.resnet18(weights=None)
+        cnn_model.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False)
+        cnn_model.maxpool = nn.Identity()
+        cnn_model.fc = nn.Linear(cnn_model.fc.in_features, 10)
+        # cnn_model.fc = nn.Linear(cnn_model.fc.in_features, 100)
+        model = HybridModel(vit_model, cnn_model, 10)
+        # model = HybridModel(vit_model, cnn_model, 100)
         model = nn.DataParallel(model, device_ids=device_ids)
         print("Using GPUs " + str(device_ids))
         model = model.to(device)
@@ -183,35 +205,7 @@ def main():
                         store_indices.append(i)
 
                 n_take = min(samples_per_task, len(store_indices))
-
-                if selection == "random":
-                    chosen = random.sample(store_indices, n_take)
-                else:
-                    # Model confidence
-                    model.eval()
-                    confidences = []
-                    loader = DataLoader(Subset(store_dataset, store_indices), batch_size=batch_size, shuffle=False, num_workers=0)
-                    with torch.no_grad():
-                        for images, labels in loader:
-                            images = images.to(device)
-                            outputs = model(images)
-                            probs = torch.softmax(outputs, dim=1)
-                            max_probs, _ = torch.max(probs, dim=1)
-                            for i in range(len(max_probs)):
-                                confidences.append(max_probs[i].item())
-
-                    scored = []
-                    for i in range(len(store_indices)):
-                        scored.append((confidences[i], store_indices[i]))
-
-                    if selection == "best":
-                        scored.sort(reverse=True)
-                    else:
-                        scored.sort()
-
-                    chosen = []
-                    for i in range(n_take):
-                        chosen.append(scored[i][1])
+                chosen = random.sample(store_indices, n_take)
 
                 for i in chosen:
                     image, label = store_dataset[i]
