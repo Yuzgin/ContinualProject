@@ -1,0 +1,22 @@
+============================================================
+buffer = 0
+selection = random
+lr = 0.01
+wd = 0.005
+seed = 23
+parameters = 11220132
+num_tasks = 5
+accuracy matrix:
+after task 1 : [77.0]
+after task 2 : [0.0, 84.45]
+after task 3 : [0.0, 0.0, 85.2]
+after task 4 : [0.0, 0.0, 0.0, 83.5]
+after task 5 : [0.0, 0.0, 0.0, 0.0, 88.1]
+forgetting:
+task 1 = 77.0
+task 2 = 84.45
+task 3 = 85.2
+task 4 = 83.5
+average accuracy = 17.619999999999997
+average forgetting = 82.5375
+
