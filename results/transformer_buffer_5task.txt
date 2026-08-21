@@ -1,0 +1,88 @@
+============================================================
+buffer = 0
+selection = random
+lr = 0.001
+wd = 0.005
+seed = 23
+parameters = 5380132
+num_tasks = 5
+accuracy matrix:
+after task 1 : [51.65]
+after task 2 : [0.0, 56.85]
+after task 3 : [0.0, 0.0, 62.65]
+after task 4 : [0.0, 0.0, 0.0, 61.55]
+after task 5 : [0.0, 0.0, 0.0, 0.0, 66.4]
+forgetting:
+task 1 = 51.65
+task 2 = 56.85
+task 3 = 62.65
+task 4 = 61.55
+average accuracy = 13.280000000000001
+average forgetting = 58.175
+
+============================================================
+buffer = 2500
+selection = random
+lr = 0.001
+wd = 0.005
+seed = 23
+parameters = 5380132
+num_tasks = 5
+accuracy matrix:
+after task 1 : [50.1]
+after task 2 : [16.6, 49.0]
+after task 3 : [9.9, 19.4, 55.75]
+after task 4 : [8.45, 12.4, 22.3, 55.35]
+after task 5 : [7.05, 11.6, 14.4, 23.1, 59.9]
+forgetting:
+task 1 = 43.050000000000004
+task 2 = 37.4
+task 3 = 41.35
+task 4 = 32.25
+average accuracy = 23.21
+average forgetting = 38.5125
+
+============================================================
+buffer = 10000
+selection = random
+lr = 0.001
+wd = 0.005
+seed = 23
+parameters = 5380132
+num_tasks = 5
+accuracy matrix:
+after task 1 : [49.5]
+after task 2 : [35.2, 33.0]
+after task 3 : [24.45, 32.75, 42.15]
+after task 4 : [21.85, 25.35, 34.7, 44.2]
+after task 5 : [19.7, 22.0, 28.15, 34.65, 45.2]
+forgetting:
+task 1 = 29.8
+task 2 = 11.0
+task 3 = 14.0
+task 4 = 9.550000000000004
+average accuracy = 29.939999999999998
+average forgetting = 16.0875
+
+============================================================
+buffer = 25000
+selection = random
+lr = 0.001
+wd = 0.005
+seed = 23
+parameters = 5380132
+num_tasks = 5
+accuracy matrix:
+after task 1 : [51.4]
+after task 2 : [44.65, 25.25]
+after task 3 : [33.85, 41.8, 35.55]
+after task 4 : [31.65, 35.05, 44.0, 36.1]
+after task 5 : [27.95, 31.75, 37.9, 41.9, 34.5]
+forgetting:
+task 1 = 23.45
+task 2 = -6.5
+task 3 = -2.3500000000000014
+task 4 = -5.799999999999997
+average accuracy = 34.8
+average forgetting = 2.2
+

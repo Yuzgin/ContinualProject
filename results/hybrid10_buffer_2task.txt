@@ -14,3 +14,51 @@ task 1 = 93.32
 average accuracy = 48.58
 average forgetting = 93.32
 
+============================================================
+buffer = 1000
+selection = random
+lr = 0.001
+wd = 0.005
+seed = 23
+parameters = 16536934
+num_tasks = 2
+accuracy matrix:
+after task 1 : [93.38]
+after task 2 : [0.0, 97.44]
+forgetting:
+task 1 = 93.38
+average accuracy = 48.72
+average forgetting = 93.38
+
+============================================================
+buffer = 2500
+selection = random
+lr = 0.001
+wd = 0.005
+seed = 23
+parameters = 16536934
+num_tasks = 2
+accuracy matrix:
+after task 1 : [93.72]
+after task 2 : [0.0, 97.62]
+forgetting:
+task 1 = 93.72
+average accuracy = 48.81
+average forgetting = 93.72
+
+============================================================
+buffer = 5000
+selection = random
+lr = 0.001
+wd = 0.005
+seed = 23
+parameters = 16536934
+num_tasks = 2
+accuracy matrix:
+after task 1 : [93.56]
+after task 2 : [0.0, 97.4]
+forgetting:
+task 1 = 93.56
+average accuracy = 48.7
+average forgetting = 93.56
+
