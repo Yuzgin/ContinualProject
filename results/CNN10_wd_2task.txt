@@ -2,47 +2,47 @@
 buffer = 2500
 selection = random
 lr = 0.01
-wd = 0.005
+wd = 0.0005
 seed = 23
 parameters = 11173962
 num_tasks = 2
 accuracy matrix:
-after task 1 : [93.94]
-after task 2 : [54.98, 96.98]
+after task 1 : [91.04]
+after task 2 : [58.1, 92.16]
 forgetting:
-task 1 = 38.96
-average accuracy = 75.98
-average forgetting = 38.96
+task 1 = 32.940000000000005
+average accuracy = 75.13
+average forgetting = 32.940000000000005
 
 ============================================================
 buffer = 2500
-selection = best
+selection = random
 lr = 0.01
 wd = 0.005
 seed = 23
 parameters = 11173962
 num_tasks = 2
 accuracy matrix:
-after task 1 : [94.04]
-after task 2 : [42.68, 96.96]
+after task 1 : [93.96]
+after task 2 : [55.02, 96.84]
 forgetting:
-task 1 = 51.36000000000001
-average accuracy = 69.82
-average forgetting = 51.36000000000001
+task 1 = 38.93999999999999
+average accuracy = 75.93
+average forgetting = 38.93999999999999
 
 ============================================================
 buffer = 2500
-selection = worst
+selection = random
 lr = 0.01
-wd = 0.005
+wd = 0.05
 seed = 23
 parameters = 11173962
 num_tasks = 2
 accuracy matrix:
-after task 1 : [93.8]
-after task 2 : [17.76, 97.18]
+after task 1 : [93.28]
+after task 2 : [42.62, 94.9]
 forgetting:
-task 1 = 76.03999999999999
-average accuracy = 57.470000000000006
-average forgetting = 76.03999999999999
+task 1 = 50.660000000000004
+average accuracy = 68.76
+average forgetting = 50.660000000000004
 

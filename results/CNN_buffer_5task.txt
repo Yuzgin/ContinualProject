@@ -20,3 +20,69 @@ task 4 = 83.5
 average accuracy = 17.619999999999997
 average forgetting = 82.5375
 
+============================================================
+buffer = 2500
+selection = random
+lr = 0.01
+wd = 0.005
+seed = 23
+parameters = 11220132
+num_tasks = 5
+accuracy matrix:
+after task 1 : [75.9]
+after task 2 : [26.9, 80.35]
+after task 3 : [16.8, 28.8, 83.6]
+after task 4 : [14.55, 18.5, 33.35, 83.9]
+after task 5 : [12.85, 17.25, 24.55, 35.8, 87.05]
+forgetting:
+task 1 = 63.050000000000004
+task 2 = 63.099999999999994
+task 3 = 59.05
+task 4 = 48.10000000000001
+average accuracy = 35.5
+average forgetting = 58.325
+
+============================================================
+buffer = 10000
+selection = random
+lr = 0.01
+wd = 0.005
+seed = 23
+parameters = 11220132
+num_tasks = 5
+accuracy matrix:
+after task 1 : [76.0]
+after task 2 : [57.15, 70.75]
+after task 3 : [43.55, 58.45, 75.05]
+after task 4 : [38.75, 48.3, 57.75, 75.4]
+after task 5 : [34.2, 43.15, 48.65, 55.45, 76.3]
+forgetting:
+task 1 = 41.8
+task 2 = 27.6
+task 3 = 26.4
+task 4 = 19.950000000000003
+average accuracy = 51.55
+average forgetting = 28.9375
+
+============================================================
+buffer = 25000
+selection = random
+lr = 0.01
+wd = 0.005
+seed = 23
+parameters = 11220132
+num_tasks = 5
+accuracy matrix:
+after task 1 : [76.55]
+after task 2 : [69.4, 60.3]
+after task 3 : [59.0, 71.1, 64.6]
+after task 4 : [56.1, 62.7, 66.65, 64.85]
+after task 5 : [52.7, 59.95, 62.4, 66.8, 58.2]
+forgetting:
+task 1 = 23.849999999999994
+task 2 = 0.3499999999999943
+task 3 = 2.1999999999999957
+task 4 = -1.9500000000000028
+average accuracy = 60.010000000000005
+average forgetting = 6.112499999999995
+
