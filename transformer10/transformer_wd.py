@@ -23,14 +23,15 @@ dataset_path = "../data/cifar10"
 buffer_size = 2500
 
 # 5 tasks (2 classes per task)
-# tasks = [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
+tasks = [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
 
 # 10 tasks (1 class per task)
 # tasks = [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]
 
 # 2 tasks (5 classes per task)
-tasks = [[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]
+# tasks = [[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]
 norm = transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
+
 
 
 

@@ -33,18 +33,19 @@ dataset_path = "../data/cifar100"
 #     tasks.append(task)
 
 # 10 tasks (10 classes per task)
-# tasks = []
-# for i in range(0, 100, 10):
-#     task = list(range(i, i + 10))
-#     tasks.append(task)
-
-# 5 tasks (20 classes per task)
 tasks = []
-for i in range(0, 100, 20):
-    task = list(range(i, i + 20))
+for i in range(0, 100, 10):
+    task = list(range(i, i + 10))
     tasks.append(task)
 
+# 5 tasks (20 classes per task)
+# tasks = []
+# for i in range(0, 100, 20):
+#     task = list(range(i, i + 20))
+#     tasks.append(task)
+
 norm = transforms.Normalize((0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761))
+
 
 
 # GPU selection for parralelisation]
