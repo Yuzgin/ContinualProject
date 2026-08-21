@@ -1,0 +1,32 @@
+============================================================
+buffer = 0
+selection = random
+lr = 0.001
+wd = 0.005
+seed = 23
+parameters = 5380132
+num_tasks = 10
+accuracy matrix:
+after task 1 : [61.9]
+after task 2 : [0.0, 58.6]
+after task 3 : [0.0, 0.0, 61.0]
+after task 4 : [0.0, 0.0, 0.0, 63.4]
+after task 5 : [0.0, 0.0, 0.0, 0.0, 69.6]
+after task 6 : [0.0, 0.0, 0.0, 0.0, 0.0, 68.4]
+after task 7 : [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 69.1]
+after task 8 : [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 71.7]
+after task 9 : [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 69.4]
+after task 10 : [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 73.4]
+forgetting:
+task 1 = 61.9
+task 2 = 58.6
+task 3 = 61.0
+task 4 = 63.4
+task 5 = 69.6
+task 6 = 68.4
+task 7 = 69.1
+task 8 = 71.7
+task 9 = 69.4
+average accuracy = 7.340000000000001
+average forgetting = 65.9
+

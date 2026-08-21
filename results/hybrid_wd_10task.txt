@@ -30,3 +30,35 @@ task 9 = 84.5
 average accuracy = 10.760000000000002
 average forgetting = 85.55555555555556
 
+============================================================
+buffer = 10000
+selection = random
+lr = 0.001
+wd = 0.005
+seed = 23
+parameters = 16620364
+num_tasks = 10
+accuracy matrix:
+after task 1 : [85.1]
+after task 2 : [0.3, 83.2]
+after task 3 : [0.5, 3.9, 87.2]
+after task 4 : [0.5, 0.4, 10.1, 86.6]
+after task 5 : [2.1, 0.1, 0.1, 2.0, 86.9]
+after task 6 : [3.2, 3.1, 2.0, 1.9, 6.9, 87.3]
+after task 7 : [0.0, 1.2, 1.8, 2.8, 4.5, 12.5, 87.2]
+after task 8 : [0.9, 0.8, 0.3, 0.3, 0.7, 4.9, 2.8, 88.1]
+after task 9 : [0.4, 1.1, 1.1, 0.8, 2.0, 3.0, 2.0, 8.9, 89.8]
+after task 10 : [0.1, 0.1, 0.4, 0.4, 0.3, 0.5, 2.3, 1.5, 4.4, 91.1]
+forgetting:
+task 1 = 85.0
+task 2 = 83.10000000000001
+task 3 = 86.8
+task 4 = 86.19999999999999
+task 5 = 86.60000000000001
+task 6 = 86.8
+task 7 = 84.9
+task 8 = 86.6
+task 9 = 85.39999999999999
+average accuracy = 10.11
+average forgetting = 85.71111111111111
+
