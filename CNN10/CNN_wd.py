@@ -35,7 +35,7 @@ norm = transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
 
 
 # GPU selection for parralelisation]
-device_ids = [0, 1, 2, 3]
+device_ids = [3]
 train_transform = transforms.Compose([transforms.RandomCrop(32, padding=4),
     transforms.RandomHorizontalFlip(), transforms.ToTensor(), norm,
 ])

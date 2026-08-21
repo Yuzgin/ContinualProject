@@ -28,7 +28,7 @@ dataset_path = "../data/cifar100"
 # dataset_path = "../data/cifar10"
 
 # GPU selection for parralelisation]
-device_ids = [0, 1, 2, 3]
+device_ids = [0]
 
 # 20 tasks (5 classes per task)
 # tasks = []
