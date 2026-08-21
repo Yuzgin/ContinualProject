@@ -27,16 +27,16 @@ buffer_size = 10000
 # buffer_size = 2500
 
 # 20 tasks (5 classes per task)
-# tasks = []
-# for i in range(0, 100, 5):
-#     task = list(range(i, i + 5))
-#     tasks.append(task)
+tasks = []
+for i in range(0, 100, 5):
+    task = list(range(i, i + 5))
+    tasks.append(task)
 
 # 10 tasks (10 classes per task)
-tasks = []
-for i in range(0, 100, 10):
-    task = list(range(i, i + 10))
-    tasks.append(task)
+# tasks = []
+# for i in range(0, 100, 10):
+#     task = list(range(i, i + 10))
+#     tasks.append(task)
 
 # 5 tasks (20 classes per task)
 # tasks = []
