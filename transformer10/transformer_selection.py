@@ -36,7 +36,7 @@ norm = transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
 
 
 # GPU selection for parralelisation]
-device_ids = [0, 1, 2, 3]
+device_ids = [3]
 train_transform = transforms.Compose([transforms.RandomCrop(32, padding=4),
     transforms.RandomHorizontalFlip(), transforms.ToTensor(), norm,
 ])
@@ -134,7 +134,7 @@ def main():
                 if train_dataset.targets[i] in classes:
                     indices.append(i)
 
-            train_loader = DataLoader(Subset(train_dataset, indices), batch_size=batch_size, shuffle=True, num_workers=16)
+            train_loader = DataLoader(Subset(train_dataset, indices), batch_size=batch_size, shuffle=True, num_workers=12)
 
             optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=wd)
             scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs)
@@ -228,7 +228,7 @@ def main():
                     if test_dataset.targets[i] in eval_classes:
                         eval_indices.append(i)
 
-                test_loader = DataLoader(Subset(test_dataset, eval_indices), batch_size=batch_size, shuffle=False, num_workers=16)
+                test_loader = DataLoader(Subset(test_dataset, eval_indices), batch_size=batch_size, shuffle=False, num_workers=12)
 
                 correct = 0
                 total = 0
