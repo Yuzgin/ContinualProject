@@ -73,9 +73,11 @@ the required `tasks` definition.
 CIFAR-10 experiments use 2, 5 or 10 tasks.
 CIFAR-100 experiments use 5, 10 or 20 tasks.
 
-The `device_ids` value in each script reflects the multi-GPU system used for
-the original experiments. Change this to an available CUDA device if rerunning
-on another machine (for example `[0]`).
+The`device_ids` is set to `[0]` in the submitted scripts for portability.
+The original experiments were distributed across multiple GPUs by assigning
+independent jobs to different devices; this did not change the experimental
+configuration within each run.
+
 
 Results are written to the `results/` directory. The committed result files
 contain the results used for the dissertation.
