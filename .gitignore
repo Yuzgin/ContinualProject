@@ -17,6 +17,12 @@ outputs/
 *.pt
 *.pth
 
+# local methodology / combined results (not for remote)
+Summary/
+
+# local plots
+plots/
+
 # os / editor
 .DS_Store
 .idea/
