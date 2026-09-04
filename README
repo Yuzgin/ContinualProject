@@ -6,3 +6,96 @@
 - Transformer, ViT (tiny, 12 layers): ~5–6M (was tiny×2 / 24 layers ≈ 10.7M)
 - Hybrid, both: CNN + ViT above (exact count printed at run time)
 - `hybrid10/`: same hybrid model on CIFAR-10 (mirrors CNN10 / transformer10)
+
+# Continual Learning Replay Buffer Study
+
+Supporting implementation and experimental results for the MSc dissertation
+"Memory replay buffer configurations and their effects on continual learning".
+
+## Project overview
+
+This repository contains a controlled empirical study of memory replay in
+class-incremental continual learning using CIFAR-10 and CIFAR-100.
+
+The experiments vary:
+- replay buffer capacity
+- replay sample selection strategy
+- learning rate
+- weight decay
+- task granularity
+
+Three model families are evaluated:
+- ResNet-18 CNN
+- Vision Transformer (ViT)
+- Hybrid CNN-ViT
+
+All models are trained from scratch. Experiments use random seed 23.
+
+## Repository structure
+
+- `CNN10/` - ResNet-18 experiments on CIFAR-10
+- `transformer10/` - ViT experiments on CIFAR-10
+- `hybrid10/` - Hybrid experiments on CIFAR-10
+- `CNN/` - ResNet-18 experiments on CIFAR-100
+- `transformer/` - ViT experiments on CIFAR-100
+- `hybrid/` - Hybrid experiments on CIFAR-100
+- `downloadData/` - scripts for downloading/preparing CIFAR-10 and CIFAR-100
+- `results/` - logged results from all experimental configurations
+- `requirements.txt` - Python dependencies
+
+Each model directory contains four experiment scripts:
+`*_buffer.py`, `*_lr.py`, `*_selection.py`, and `*_wd.py`.
+
+## Dataset setup
+
+From the `downloadData` directory run:
+
+python download_C10.py
+python download_C100.py
+
+This creates `data/cifar10/` and `data/cifar100/`.
+The dataset directory is not included in the repository.
+
+## Running experiments
+
+Install the dependencies:
+
+pip install -r requirements.txt
+
+Experiment scripts should be run from their model directory, for example:
+
+cd CNN10
+python CNN_buffer.py
+
+Task configurations are selected near the top of each script by activating
+the required `tasks` definition.
+
+CIFAR-10 experiments use 2, 5 or 10 tasks.
+CIFAR-100 experiments use 5, 10 or 20 tasks.
+
+The `device_ids` value in each script reflects the multi-GPU system used for
+the original experiments. Change this to an available CUDA device if rerunning
+on another machine (for example `[0]`).
+
+Results are written to the `results/` directory. The committed result files
+contain the results used for the dissertation.
+
+## Experimental notes
+
+- Batch size: 128 current-task examples
+- Epochs per task: 30
+- Seed: 23
+- CNN optimiser: SGD with momentum 0.9
+- ViT / Hybrid optimiser: AdamW
+- Cosine annealing learning-rate schedule
+- A new optimiser and scheduler are created for each task while model weights
+  are retained between tasks
+- Replay uses up to one replay example per current-task example, limited by
+  the number of examples currently available in memory
+- Results are single-seed fixed-protocol comparisons rather than multi-seed
+  statistical estimates
+
+The existing files in `results/` are the original experiment logs used in the
+dissertation. Experiment scripts append to their corresponding result file,
+so existing logs should be copied or removed before independently rerunning
+an experiment.
